@@ -8,11 +8,8 @@ st.set_page_config(page_title="Furkan Korner & Piyasa AI", page_icon="📈", lay
 
 st.markdown("""
     <style>
-    /* Kurumsal ve Ağır Bahis Şirketi Teması (Koyu Lacivert & Petrol) */
     .stApp { background-color: #0b1120 !important; color: #f8fafc !important; }
     .main { background-color: #0b1120 !important; }
-    
-    /* Elit Giriş Kutuları */
     div[data-testid="stTextInput"] input {
         background-color: #1e293b !important;
         color: #38bdf8 !important;
@@ -27,8 +24,6 @@ st.markdown("""
         border-color: #10b981 !important;
         box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
     }
-    
-    /* Profesyonel Yatırım Butonu */
     .stButton>button { 
         background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; 
         color: white !important; 
@@ -41,14 +36,10 @@ st.markdown("""
         letter-spacing: 1px !important; 
         font-size: 16px !important;
         box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2) !important;
-        transition: all 0.2s ease !important;
     }
     .stButton>button:hover { 
-        transform: translateY(-1px) !important;
         box-shadow: 0 6px 18px rgba(5, 150, 105, 0.3) !important; 
     }
-    
-    /* Kurumsal Finansal Göstergeler */
     div[data-testid="stMetricValue"] { 
         color: #10b981 !important; 
         font-weight: 900 !important; 
@@ -64,9 +55,8 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Ağır ve Profesyonel Başlık Paneli
 st.markdown("""
-<div style="text-align: center; padding: 30px; background-color: #1e293b; border-radius: 12px; margin-bottom: 35px; border: 1px solid #334155; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+<div style="text-align: center; padding: 30px; background-color: #1e293b; border-radius: 12px; margin-bottom: 35px; border: 1px solid #334155;">
     <h1 style='color: #ffffff; font-weight: 900; margin: 0; font-size: 28px; letter-spacing: 0.5px;'>📊 FURKAN KORNER & PİYASA AI</h1>
     <h3 style='color: #10b981; font-weight: 700; margin: 5px 0 0 0; font-size: 12px; letter-spacing: 1px; text-transform: uppercase;'>GLOBAL RISK & MARKET ANALYTICS TERMINAL</h3>
     <p style='color: #94a3b8; font-weight: 600; font-size: 12px; margin: 10px 0 0 0; border-top: 1px solid #334155; padding-top: 10px;'>CANLI PİYASA ARAŞTIRMA BOTU VE POISSON DAĞILIM ENTEGRASYONU</p>
@@ -76,29 +66,24 @@ st.markdown("""
 col1, col2 = st.columns(2)
 with col1:
     st.markdown("<p style='color:#94a3b8; font-weight:700; font-size:11px; margin-bottom:5px; text-transform:uppercase;'>🏠 EV SAHİBİ (SAHADAN)</p>", unsafe_allow_html=True)
-    ev_takim = st.text_input("", "Dortmund", key="home_market_v11", label_visibility="collapsed")
+    ev_takim = st.text_input("", "Dortmund", key="home_v11_fixed", label_visibility="collapsed")
 with col2:
     st.markdown("<p style='color:#94a3b8; font-weight:700; font-size:11px; margin-bottom:5px; text-transform:uppercase;'>🚀 DEPLASMAN (SAHADAN)</p>", unsafe_allow_html=True)
-    dep_takim = st.text_input("", "Villarreal", key="away_market_v11", label_visibility="collapsed")
+    dep_takim = st.text_input("", "Villarreal", key="away_v11_fixed", label_visibility="collapsed")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# CANLI PİYASA BEKLENTİSİ ARAŞTIRMA MOTORU
 def arastir_piyasa_beklentisi(home, away):
     query = f"{home} {away} corners market analysis predictions"
     url = f"https://google.com{query.replace(' ', '+')}"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
-    
     try:
         response = requests.get(url, headers=headers, timeout=5)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'html.parser')
             text = soup.get_text().lower()
-            
-            # Canlı arama metninde piyasa eğilimlerini süzme
             over_count = text.count("over") + text.count("üst") + text.count("baskili")
             under_count = text.count("under") + text.count("alt") + text.count("kisir")
-            
             if over_count > under_count:
                 return "YÜKSEK (Piyasa oyuncuları ve sendikalar bu maçta çizgilerin aktif kullanılacağını öngörerek ÜST baremlerine yoğunlaşıyor. Oranlarda hafif bir düşüş eğilimi saptandı.)"
             else:
@@ -107,7 +92,6 @@ def arastir_piyasa_beklentisi(home, away):
         pass
     return "DENGELİ (Küresel piyasa hacmi dengeli, barem tuzaklarına karşı temkinli hat korunuyor.)"
 
-# %100 SAPMASIZ FUTBOL VERİ MATRİSİ
 team_quantum_db = {
     "city": { "corners": 6.9, "cross": 25, "shots": 17.8, "cards": 1.8, "style": "Ezici Kanat Ablukası", "reason": "Sürekli ceza sahasına dikine girmeleri ve savunmayı çizgiye yaslamaları" },
     "madrid": { "corners": 6.3, "cross": 22, "shots": 16.5, "cards": 2.0, "style": "Hızlı Geçiş Hücumları", "reason": "Bek oyuncularının bindirmeleriyle ceza sahası dışından yüksek şut hacmi üretmeleri" },
@@ -129,35 +113,36 @@ team_quantum_db = {
 def run_deep_quantum_analysis(home, away):
     h_clean = home.lower().replace(".", "").strip()
     a_clean = away.lower().replace(".", "").strip()
-    
     h_data = { "corners": 4.7, "cross": 14, "shots": 11.8, "cards": 2.2, "style": "Standart Dengeli Taktik", "reason": "bülten standartlarında ortalama bir tempoda oynamaları" }
     a_data = { "corners": 4.1, "cross": 12, "shots": 10.4, "cards": 2.4, "style": "Standart Dengeli Taktik", "reason": "bülten standartlarında ortalama bir tempoda oynamaları" }
-    
     for key in team_quantum_db:
         if key in h_clean: h_data = team_quantum_db[key]
         if key in a_clean: a_data = team_quantum_db[key]
-        
     ev_korner_limit = (h_data["corners"] * 0.55) + (h_data["cross"] * 0.12) + (h_data["shots"] * 0.06)
     dep_korner_limit = (a_data["corners"] * 0.55) + (a_data["cross"] * 0.12) + (a_data["shots"] * 0.06)
-    
     atmosfer_etkisi = False
     if any(k in h_clean for k in ["city", "madrid", "dortmund", "galatasaray", "fenerbahce", "bayern", "liverpool"]):
         ev_korner_limit += 1.2
         atmosfer_etkisi = True
-        
     total_corners = ev_korner_limit + dep_korner_limit
     iy_corners = total_corners * 0.45
-    
     total_cards = h_data["cards"] + a_data["cards"]
     kilitlenme_var = False
     if h_data["corners"] < 4.5 and a_data["corners"] < 4.5:
         total_cards += 1.4
         kilitlenme_var = True
-        
     score = 70
     if h_data["corners"] > 5.5 and a_data["corners"] > 5.0: score = 95
     if h_data["corners"] < 4.5 and a_data["corners"] < 4.5: score = 45
-    
     return total_corners, iy_corners, ev_korner_limit, dep_korner_limit, total_cards, score, h_data["style"], a_data["style"], h_data["reason"], a_data["reason"], atmosfer_etkisi, kilitlenme_var
 
+# ARTIK SORUNSUZ ÇALIŞAN TETİKLEME ALANI
 if st.button("🔥 PİYASA VE MATRİS SORGULAMASINI BAŞLAT"):
+    if ev_takim.strip() == "" or dep_takim.strip() == "":
+        st.error("Lütfen alanları boş bırakmayın!")
+    else:
+        with st.spinner('Canlı küresel bahis havuzları taranıyor...'):
+            piyasa_trend = arastir_piyasa_beklentisi(ev_takim, dep_takim)
+            tc, iy, ek, dk, t_cards, score, h_style, a_style, h_reason, a_reason, atm, kilit = run_deep_quantum_analysis(ev_takim, dep_takim)
+            
+            st.markdown(f"""
